@@ -1,3 +1,7 @@
+*log
+.vagrant
 iso
-packer_cache
 output-virtualbox-iso*
+packer-manifest.json
+packer_cache
+*.box
