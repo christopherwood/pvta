@@ -1,12 +1,13 @@
 {
     "_docs1": "https://www.debian.org/releases/stretch/amd64/apbs02.html.en",
     "variables": {
+	"pubkey": "{{ env `PUBKEY` }}"
     },
     "builders": [
 	{
 	    "boot_command": [
 		"<esc><wait1>",
-		"auto preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian1-preseed.cfg<enter>"
+		"auto preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian1.cfg<enter>"
 	    ],
 	    "boot_wait": "5s",
 	    "guest_os_type": "Debian_64",
@@ -21,5 +22,24 @@
 	    "ssh_wait_timeout": "30m",
 	    "type": "virtualbox-iso"
 	}
+    ],
+    "provisioners": [
+	{
+	    "type": "shell",
+	    "inline": [
+		"mkdir $HOME/.ssh",
+		"echo '{{ user `pubkey` }}' | tee $HOME/.ssh/authorized_keys"
+	    ]
+	}
+    ],
+    "post-processors": [
+	"manifest",
+	{
+	    "compression_level": 0,
+	    "keep_input_artifact": true,
+	    "type": "vagrant",
+	    "vagrantfile_template": "./Vagrantfile"
+	}
     ]
+
 }
