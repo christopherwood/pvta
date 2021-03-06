@@ -13,7 +13,7 @@
 	    "iso_url": "iso/debian-9.9.0-amd64-DVD-1.iso",
 	    "memory": 1024,
 	    "output_directory": "output",
-	    "output_filename": "debian1",
+	    "output_filename": "debian9",
 	    "shutdown_command": "halt -p",
 	    "ssh_password": "packer",
 	    "ssh_timeout": "30m",
@@ -25,7 +25,7 @@
 	{
 	    "compression_level": 0,
 	    "keep_input_artifact": true,
-	    "output": "debian1.box",
+	    "output": "debian9.box",
 	    "type": "vagrant",
 	    "vagrantfile_template": "./Vagrantfile"
 	}

@@ -3,10 +3,10 @@
 case $1 in
     centos)
     ;;
-    debian)
+    debian9)
     ;;
     *)
-	echo "Usage: $0 [centos|debian]"
+	echo "Usage: $0 [centos|debian9]"
 	exit
 	;;
 esac
@@ -20,4 +20,4 @@ export PUBKEY=`cat $HOME/.ssh/id_cwood.pub`
 
 [ -h iso ] || ln -s ../iso
 rm -f $PACKER_LOG_PATH
-packer build ${OS}1.json
+packer build ${OS}.json

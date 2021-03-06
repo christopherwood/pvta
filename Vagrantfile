@@ -19,8 +19,8 @@ Vagrant.configure('2') do |config|
     c.vm.box = 'centos1.box'
   end
 
-  config.vm.define 'debian' do |d|
-    d.vm.box = 'debian1.box'
+  config.vm.define 'debian9' do |d|
+    d.vm.box = 'debian9.box'
   end
 
   config.ssh.insert_key = false
