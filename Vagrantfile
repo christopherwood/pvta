@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -12,13 +14,21 @@ Vagrant.configure('2') do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = './packer_virtualbox-iso_virtualbox.box'
+
+  config.vm.define 'centos' do |c|
+    c.vm.box = 'centos1.box'
+  end
+
+  config.vm.define 'debian' do |d|
+    d.vm.box = 'debian1.box'
+  end
+
   config.ssh.insert_key = false
-  # config.ssh.password = 'vagrant'
   # switch comments for validation
   # config.ssh.private_key_path = '/tmp/privkey'
   config.ssh.private_key_path = '/home/cwood/.ssh/id_cwood'
-  config.ssh.username = 'packer'
+  config.ssh.username = 'root'
+  # config.ssh.password = 'packer'
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
