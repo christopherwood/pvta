@@ -19,6 +19,10 @@ Vagrant.configure('2') do |config|
     c.vm.box = 'centos7.box'
   end
 
+  config.vm.define 'centos8' do |c|
+    c.vm.box = 'centos8.box'
+  end
+
   config.vm.define 'debian9' do |d|
     d.vm.box = 'debian9.box'
   end

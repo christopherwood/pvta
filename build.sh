@@ -3,12 +3,14 @@
 case $1 in
     centos7)
     ;;
+    centos8)
+    ;;
     debian9)
     ;;
     debian10)
     ;;
     *)
-	echo "Usage: $0 [centos7|debian9|debian10]"
+	echo "Usage: $0 [centos7|centos8|debian9|debian10]"
 	exit
 	;;
 esac

@@ -1,0 +1,54 @@
+{
+    "_docs1": "https://docs.centos.org/en-US/8-docs/",
+    "builders": [
+	{
+	    "boot_command": [
+		"<esc><wait1>",
+		"linux inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart-centos8.cfg<enter>"
+	    ],
+	    "boot_wait": "5s",
+	    "guest_os_type": "RedHat_64",
+	    "http_directory": "/home/cwood/files/packer",
+	    "iso_checksum": "sha256:c87a2d81d67bbaeaf646aea5bedd70990078ec252fc52f5a7d65ff609871e255",
+	    "iso_url": "iso/CentOS-8.2.2004-x86_64-dvd1/CentOS-8.2.2004-x86_64-dvd1.iso",
+	    "memory": 1024,
+	    "output_directory": "output",
+	    "output_filename": "centos8",
+	    "shutdown_command": "halt -p",
+	    "ssh_password": "packer",
+	    "ssh_timeout": "30m",
+	    "ssh_username": "root",
+	    "type": "virtualbox-iso"
+	}
+    ],
+    "post-processors": [
+	{
+	    "compression_level": 0,
+	    "keep_input_artifact": true,
+	    "output": "centos8.box",
+	    "type": "vagrant",
+	    "vagrantfile_template": "./Vagrantfile"
+	}
+    ],
+    "provisioners": [
+	{
+	    "inline": [
+		"mkdir /root/.ssh",
+		"echo '{{ user `pubkey` }}' | tee /root/.ssh/authorized_keys"
+	    ],
+	    "type": "shell"
+	},
+	{
+	    "inline": [
+		"modprobe loop",
+		"mkdir /tmp/vbga",
+		"mount -t iso9660 -o loop /root/VBoxGuestAdditions.iso /tmp/vbga",
+		"bash /tmp/vbga/VBoxLinuxAdditions.run"
+	    ],
+	    "type": "shell"
+	}
+    ],
+    "variables": {
+	"pubkey": "{{ env `PUBKEY` }}"
+    }
+}
