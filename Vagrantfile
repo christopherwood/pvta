@@ -23,6 +23,10 @@ Vagrant.configure('2') do |config|
     d.vm.box = 'debian9.box'
   end
 
+  config.vm.define 'debian10' do |d|
+    d.vm.box = 'debian10.box'
+  end
+
   config.ssh.insert_key = false
   # switch comments for validation
   # config.ssh.private_key_path = '/tmp/privkey'

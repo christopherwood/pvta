@@ -1,0 +1,55 @@
+{
+    "_docs1": "https://www.debian.org/releases/stretch/amd64/apbs02.html.en",
+    "builders": [
+	{
+	    "boot_command": [
+		"<esc><wait1>",
+		"auto preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-debian1.cfg<enter>"
+	    ],
+	    "boot_wait": "5s",
+	    "guest_os_type": "Debian_64",
+	    "http_directory": "/home/cwood/files/packer",
+	    "iso_checksum": "sha256:9a393562bc61efe78153a485005e6930b8b5a20ef509c37d07203b99873caa3c",
+	    "iso_url": "iso/debian-10.8.0-amd64-DVD-1.iso",
+	    "memory": 1024,
+	    "output_directory": "output",
+	    "output_filename": "debian10",
+	    "shutdown_command": "halt -p",
+	    "ssh_password": "packer",
+	    "ssh_timeout": "30m",
+	    "ssh_username": "root",
+	    "type": "virtualbox-iso"
+	}
+    ],
+    "post-processors": [
+	{
+	    "compression_level": 0,
+	    "keep_input_artifact": true,
+	    "output": "debian10.box",
+	    "type": "vagrant",
+	    "vagrantfile_template": "./Vagrantfile"
+	}
+    ],
+    "provisioners": [
+	{
+	    "inline": [
+		"mkdir /root/.ssh",
+		"echo '{{ user `pubkey` }}' | tee /root/.ssh/authorized_keys",
+		"printf 'deb http://deb.debian.org/debian buster main\ndeb-src http://deb.debian.org/debian buster main\ndeb http://security.debian.org/debian-security buster/updates main contrib\ndeb-src http://security.debian.org/debian-security buster/updates main contrib\ndeb http://deb.debian.org/debian buster-updates main contrib\ndeb-src http://deb.debian.org/debian buster-updates main contrib\n' >/etc/apt/sources.list",
+		"apt-get clean",
+		"apt-get update",
+		"apt-get -y install sudo",
+		"sed -i -e 's/^Default requiretty/#Default requiretty/' /etc/sudoers",
+		"dpkg -l | grep headers"
+	    ],
+	    "type": "shell"
+	},
+	{
+	    "script": "./vbga.sh",
+	    "type": "shell"
+	}
+    ],
+    "variables": {
+	"pubkey": "{{ env `PUBKEY` }}"
+    }
+}
