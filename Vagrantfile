@@ -15,8 +15,8 @@ Vagrant.configure('2') do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
 
-  config.vm.define 'centos' do |c|
-    c.vm.box = 'centos1.box'
+  config.vm.define 'centos7' do |c|
+    c.vm.box = 'centos7.box'
   end
 
   config.vm.define 'debian9' do |d|
