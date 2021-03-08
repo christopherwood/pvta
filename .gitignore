@@ -1,7 +1,10 @@
+*.box
 *log
+.env
 .vagrant
 iso
+output
 output-virtualbox-iso*
 packer-manifest.json
 packer_cache
-*.box
+tmp
